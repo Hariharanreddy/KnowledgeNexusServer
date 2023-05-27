@@ -4,7 +4,7 @@ import cloudinary from "cloudinary";
 import RazorPay from "razorpay";
 import nodeCron from "node-cron";
 import { Stats } from "./models/Stats.js";
-connectDB();
+
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLIENT_NAME,
@@ -25,6 +25,9 @@ nodeCron.schedule("0 0 0 5 * *", async () => {
   }
 });
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server is working on port: ${process.env.PORT}`);
+connectDB().then(() => {
+  app.listen(process.env.PORT, () => {
+    console.log(`Server is working on port: ${process.env.PORT}`);
+  });
 });
+
